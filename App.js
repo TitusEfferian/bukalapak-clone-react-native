@@ -21,6 +21,7 @@ import rootReducer from './src/reducers/rootReducer';
 import watchSagas from './src/saga/rootSaga';
 import { StackNavigator } from "react-navigation";
 import { Icon } from 'native-base';
+import HomeScreen from './src/components/HomeScreen/index'
 
 const sagaMiddleware = createSagaMiddleware()
 function configureStore() {
@@ -91,7 +92,7 @@ class App extends React.Component {
   render() {
     return (
       <Provider store={store} >
-        <RootStack />
+        <HomeScreen/>
       </Provider>
     );
   }

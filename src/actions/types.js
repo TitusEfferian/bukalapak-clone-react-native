@@ -5,3 +5,9 @@ export const SUCCESS = 'SUCCESS'
 export const FAILED = 'FAILED'
 
 /**** */
+
+/***view brand */
+
+export const REQUEST_DATA_BRAND = 'REQUEST_DATA_BRAND'
+export const REQUEST_DATA_BRAND_SUCCESS = 'REQUEST_DATA_BRAND_SUCCESS'
+export const REQUEST_DATA_BRAND_FAILURE = 'REQUEST_DATA_BRAND_FAILURE'
