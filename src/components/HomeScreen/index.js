@@ -2,12 +2,15 @@ import React, { Component } from "react";
 import HomeScreen from "./HomeScreen.js";
 import SideBar from "../sidebar/SideBar.js";
 import { DrawerNavigator } from "react-navigation";
+import {Dimensions} from 'react-native';
 const HomeScreenRouter = DrawerNavigator(
     {
         Home: { screen: HomeScreen },
+        
     },
     {
-        contentComponent: props => <SideBar {...props} />
+        contentComponent: props => <SideBar {...props} />,
+        
     }
 );
 export default HomeScreenRouter;
