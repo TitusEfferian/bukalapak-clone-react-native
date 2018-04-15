@@ -1,5 +1,5 @@
 import React from "react";
-import { StatusBar, Image, TouchableOpacity, FlatList, Dimensions, Linking,ScrollView } from "react-native";
+import { StatusBar, Image, TouchableOpacity, FlatList, Dimensions, Linking, ScrollView } from "react-native";
 import { Container, Header, Title, Left, Icon, Right, Button, Body, Content, Text, Card, CardItem, View, Spinner } from "native-base";
 import { requestDataProduct, requestDataBrand, requestDataBanner } from '../../actions/index';
 import { connect } from 'react-redux';
@@ -23,9 +23,10 @@ class HomeScreen extends React.Component {
 		console.log(item.images[0])
 		return (
 			<View>
-				<View style={{width:136,height:136,backgroundColor:'red'}}>
+				<View style={{ flex: 1,justifyContent: 'center', alignItems: 'center' }}>
+					<Image style={{width:Dimensions.get('window').width/2,height:Dimensions.get('window').width/2}} source={{uri:item.images[0]}}/>
 				</View>
-				
+
 			</View>
 
 
@@ -84,8 +85,9 @@ class HomeScreen extends React.Component {
 						</Button>
 					</Right>
 				</Header>
-				<ScrollView>
+								
 				<View style={{ flex: 1, backgroundColor: '#F5F5F5' }}>
+				<ScrollView>
 					<View>
 						{
 							this.props.banner.data == null
@@ -212,29 +214,34 @@ class HomeScreen extends React.Component {
 								<Spinner />
 							</View>
 							:
-							<View style={{ backgroundColor: 'white' }}>
+							<View style={{ flex: 1 }}>
+								<View style={{ backgroundColor: 'white' }}>
+									<View>
+										<FlatList
+											data={this.props.brand.data.data}
+											renderItem={this.renderBanner}
+											horizontal={true}
+
+										/>
+
+									</View>
+								</View>
 								<View>
 									<FlatList
-										data={this.props.brand.data.data}
-										renderItem={this.renderBanner}
-										horizontal={true}
+										data={this.props.product.data.products}
+										renderItem={this.renderProduct}
+										horizontal={false}
+										
+										numColumns={2}
 
 									/>
-
-								</View>
-								<View style={{ backgroundColor: 'black'}}>
-									<View style={{flexDirection:'row'}}>
-										<View>
-											</View>
-									</View>
-								
-									
 								</View>
 							</View>
 
 					}
+					</ScrollView>
 				</View>
-				</ScrollView>
+
 			</Container>
 		);
 	}
