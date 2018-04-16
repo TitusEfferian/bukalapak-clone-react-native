@@ -75,11 +75,11 @@ const RootStack = StackNavigator({
 
         </View>
       ), headerRight: (
-        <View style={{flexDirection:'row'}}>
+        <View style={{ flexDirection: 'row' }}>
           <View>
             <Icon name='search' style={{ color: 'white' }} />
           </View>
-          
+
         </View>
 
 
@@ -93,6 +93,7 @@ class App extends React.Component {
   render() {
     return (
       <Provider store={store} >
+        
         <HomeScreen/>
       </Provider>
     );

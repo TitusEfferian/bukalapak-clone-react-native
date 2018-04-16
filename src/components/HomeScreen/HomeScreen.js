@@ -1,14 +1,24 @@
 import React from "react";
 import { StatusBar, Image, TouchableOpacity, FlatList, Dimensions, Linking, ScrollView } from "react-native";
 import { Container, Header, Title, Left, Icon, Right, Button, Body, Content, Text, Card, CardItem, View, Spinner } from "native-base";
-import { requestDataProduct, requestDataBrand, requestDataBanner } from '../../actions/index';
+import { requestDataProduct, requestDataBrand, requestDataBanner, requestDataSection1 } from '../../actions/index';
 import { connect } from 'react-redux';
 import Carousel from 'react-native-banner-carousel';
 class HomeScreen extends React.Component {
+
+	constructor(props) {
+		super(props)
+		this.width = 0;
+		this.height = 0;
+
+
+	}
+
 	componentWillMount() {
 		this.props.requestDataProduct()
 		this.props.requestDataBrand()
 		this.props.requestDataBanner()
+		this.props.requestDataSection1()
 	}
 
 	renderBanner = ({ item }) => {
@@ -20,14 +30,14 @@ class HomeScreen extends React.Component {
 		);
 	}
 	renderProduct = ({ item }) => {
-		console.log(item)
+
 		return (
-			<View style={{ width: Dimensions.get('window').width / 2, height: Dimensions.get('window').width / 2,paddingLeft:32,paddingRight:32,borderWidth:1,borderColor:'grey'}}>
-				<View style={{ justifyContent: 'center', alignItems: 'center',marginTop:16 }}>
+			<View style={{ width: Dimensions.get('window').width / 2, height: Dimensions.get('window').width / 2, paddingLeft: 32, paddingRight: 32, borderWidth: 1, borderColor: 'grey' }}>
+				<View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 16 }}>
 					<Image style={{ height: 136, width: 136 }} source={{ uri: item.images[0] }} />
 				</View>
 				<View>
-					<Text style={{ textAlign: 'center', color: '#333', fontSize: 12,paddingTop:32 }}>{item.name}</Text>
+					<Text style={{ textAlign: 'center', color: '#333', fontSize: 12, paddingTop: 32 }}>{item.name}</Text>
 				</View>
 
 			</View>
@@ -45,15 +55,101 @@ class HomeScreen extends React.Component {
 			</View>
 		);
 	}
-	render() {
+	renderSection({ item }) {
+		let text = item.description;
 		return (
-	
+			<View style={{ paddingTop: 8 }}>
+
+				<View style={{ marginLeft: 8 }}>
+					<View style={{ zIndex: 2, position: 'absolute', flexDirection: 'row', width: 31, height: 31, borderRadius: 60, backgroundColor: '#ff566a', marginTop: 8, marginLeft: 96 }}>
+						<Text style={{ color: 'white', fontSize: 12, fontWeight: 'bold', marginLeft: 5, marginTop: 6 }}>
+							{item.deal.percentage}%
+						</Text>
+					</View>
+					<View style={{ zIndex: 1, position: 'relative' }}>
+						<Image style={{ width: 136, height: 136 }} source={{ uri: item.images.large_urls[0] }} />
+					</View>
+				</View>
+				
+				<View style={{}}>
+					
+				</View>
+
+			</View>
+		);
+	}
+	renderKenapaHarusBukalapak({ item }) {
+		return (
+			<View style={{ justifyContent: 'center', alignItems: 'center', marginLeft: 16, flex: 1, height: 102.94 }}>
+				<Image style={{ width: item.width, height: item.height, marginBottom: 16 }} source={{ uri: item.image_url }} />
+				<Text style={{ textAlign: 'center', fontSize: 12 }}>
+					{item.description}
+				</Text>
+			</View>
+		);
+
+
+		return (
+			<View>
+				{view}
+			</View>
+		);
+
+
+	}
+	render() {
+		let kenapa_bukalapak = [
+			{
+				image_url: "https://s0.bukalapak.com/images/mobile/illustrations/il-jaminan-100@2x.png",
+				description: "Jaminan 100% Aman",
+				width: 52,
+				height: 47.75,
+				key: 0
+			},
+			{
+				image_url: "https://s2.bukalapak.com/images/mobile/illustrations/il-bukadompet@2x.png",
+				description: "Kemudahan Pembayaran",
+				width: 52,
+				height: 54.47,
+				key: 1
+			},
+			{
+				image_url: "https://s3.bukalapak.com/images/mobile/illustrations/il-c-s@2x.png",
+				description: "Jaminan 100% Aman",
+				width: 52,
+				height: 62.94,
+				key: 2
+			},
+			{
+				image_url: "https://s0.bukalapak.com/images/mobile/illustrations/il-pengiriman@2x.png",
+				description: "Berbagai Jasa Pengiriman",
+				width: 52,
+				height: 53.08,
+				key: 3
+			},
+			{
+				image_url: "https://s4.bukalapak.com/images/mobile/illustrations/il-komunitastiptrik@2x.png",
+				description: "6 Manfaat Untuk Pelakapak",
+				width: 52,
+				height: 50.94,
+				key: 4
+			},
+			{
+				image_url: "https://s2.bukalapak.com/images/mobile/illustrations/il-iosandroid@2x.png",
+				description: "Kemudahan Akses Mobile",
+				width: 52,
+				height: 47.66,
+				key: 5
+			}
+		]
+		return (
+
 			<Container>
 				{
-					StatusBar.setBackgroundColor('#D71149',true)
+					StatusBar.setBackgroundColor('#D71149', true)
 				}
 				<Header style={{ backgroundColor: '#D71149' }}>
-				
+
 					<Left style={{ flexDirection: 'row' }}>
 						<Button
 							transparent
@@ -102,7 +198,7 @@ class HomeScreen extends React.Component {
 								this.props.banner.data == null
 									?
 									<View>
-										<Spinner />
+										<Spinner color='#d71149' />
 									</View>
 									:
 									<Carousel
@@ -206,12 +302,13 @@ class HomeScreen extends React.Component {
 
 						{
 
-							this.props.product.data == null || this.props.brand.data == null
+							this.props.product.data == null || this.props.brand.data == null || this.props.section1.data == null
 								?
 								<View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-									<Spinner />
+									<Spinner color='#d71149' />
 								</View>
 								:
+
 
 								<View style={{ flex: 1 }}>
 									<View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingTop: 32, backgroundColor: 'white' }}>
@@ -237,8 +334,77 @@ class HomeScreen extends React.Component {
 
 										</View>
 									</View>
+									<View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingTop: 32, backgroundColor: 'white' }}>
+										<View style={{ marginLeft: 8, width: 181 }}>
+											<Text style={{ fontWeight: 'bold' }}>
+												{this.props.section1.data.data.title}
+											</Text>
+										</View>
+										<View style={{ marginRight: 8 }}>
+											<Text style={{ color: '#d71149' }}>
+												Selengkapnya
+								</Text>
+										</View>
+									</View>
 									<View style={{ backgroundColor: 'white' }}>
-										<View style={{ paddingTop: 16, flexDirection: 'row', justifyContent: 'space-between' ,marginBottom:16}}>
+										<View>
+											<FlatList
+												data={this.props.section1.data.data.products}
+												renderItem={this.renderSection}
+												horizontal={true}
+
+											/>
+
+										</View>
+									</View>
+									<View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingTop: 32, backgroundColor: 'white' }}>
+										<View style={{ marginLeft: 8, width: 181 }}>
+											<Text style={{ fontWeight: 'bold' }}>
+												{this.props.section1.data.data.title}
+											</Text>
+										</View>
+										<View style={{ marginRight: 8 }}>
+											<Text style={{ color: '#d71149' }}>
+												Selengkapnya
+								</Text>
+										</View>
+									</View>
+									<View style={{ backgroundColor: 'white' }}>
+										<View>
+											<FlatList
+												data={this.props.section1.data.data.products}
+												renderItem={this.renderSection}
+												horizontal={true}
+
+											/>
+
+										</View>
+									</View>
+									<View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingTop: 32, backgroundColor: 'white' }}>
+										<View style={{ marginLeft: 8, width: 181 }}>
+											<Text style={{ fontWeight: 'bold' }}>
+												{this.props.section1.data.data.title}
+											</Text>
+										</View>
+										<View style={{ marginRight: 8 }}>
+											<Text style={{ color: '#d71149' }}>
+												Selengkapnya
+								</Text>
+										</View>
+									</View>
+									<View style={{ backgroundColor: 'white' }}>
+										<View>
+											<FlatList
+												data={this.props.section1.data.data.products}
+												renderItem={this.renderSection}
+												horizontal={true}
+
+											/>
+
+										</View>
+									</View>33333333
+									<View style={{ backgroundColor: 'white' }}>
+										<View style={{ paddingTop: 16, flexDirection: 'row', justifyContent: 'space-between', marginBottom: 16 }}>
 											<View style={{ marginLeft: 8 }}>
 												<Text style={{ fontWeight: 'bold' }}>Popular Products</Text>
 											</View>
@@ -260,6 +426,20 @@ class HomeScreen extends React.Component {
 								</View>
 
 						}
+						<View>
+							<View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 16 }}>
+								<Text style={{ fontWeight: 'bold' }}>
+									Kenapa Harus Bukalapak?
+								</Text>
+							</View>
+							<View style={{ marginTop: 16, flexDirection: 'row' }}>
+								<FlatList
+									data={kenapa_bukalapak}
+									renderItem={this.renderKenapaHarusBukalapak}
+									horizontal={true}
+								/>
+							</View>
+						</View>
 					</ScrollView>
 				</View>
 
@@ -271,14 +451,16 @@ function mapStateToProps(state) {
 	return {
 		product: state.viewProductReducer,
 		brand: state.viewBrandReducer,
-		banner: state.viewBannerReducer
+		banner: state.viewBannerReducer,
+		section1: state.section1Reducer
 	}
 }
 function mapDispatchToProps(dispatch) {
 	return {
 		requestDataProduct: () => dispatch(requestDataProduct()),
 		requestDataBrand: () => dispatch(requestDataBrand()),
-		requestDataBanner: () => dispatch(requestDataBanner())
+		requestDataBanner: () => dispatch(requestDataBanner()),
+		requestDataSection1: () => dispatch(requestDataSection1())
 	}
 }
 export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen);
