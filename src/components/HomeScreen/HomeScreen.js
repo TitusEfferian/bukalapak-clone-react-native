@@ -1,7 +1,7 @@
 import React from "react";
 import { StatusBar, Image, TouchableOpacity, FlatList, Dimensions, Linking, ScrollView } from "react-native";
 import { Container, Header, Title, Left, Icon, Right, Button, Body, Content, Text, Card, CardItem, View, Spinner } from "native-base";
-import { requestDataProduct, requestDataBrand, requestDataBanner, requestDataSection1 } from '../../actions/index';
+import { requestDataProduct, requestDataBrand, requestDataBanner, requestDataSection1, requestDataSection2 } from '../../actions/index';
 import { connect } from 'react-redux';
 import Carousel from 'react-native-banner-carousel';
 class HomeScreen extends React.Component {
@@ -19,9 +19,10 @@ class HomeScreen extends React.Component {
 		this.props.requestDataBrand()
 		this.props.requestDataBanner()
 		this.props.requestDataSection1()
+		this.props.requestDataSection2()
 	}
 
-	renderBanner = ({ item }) => {
+	renderBrand = ({ item }) => {
 		return (
 			<View style={{ width: 94, height: 94, borderWidth: 1, marginTop: 16, borderColor: '#eeeeee', justifyContent: 'center', alignItems: 'center' }}>
 				<Image style={{ width: 48, height: 48 }} source={{ uri: item.logo_url }} />
@@ -58,7 +59,7 @@ class HomeScreen extends React.Component {
 	renderSection({ item }) {
 		let text = item.description;
 		return (
-			<View style={{ paddingTop: 8 }}>
+			<View style={{ paddingTop: 16 }}>
 
 				<View style={{ marginLeft: 8 }}>
 					<View style={{ zIndex: 2, position: 'absolute', flexDirection: 'row', width: 31, height: 31, borderRadius: 60, backgroundColor: '#ff566a', marginTop: 8, marginLeft: 96 }}>
@@ -70,9 +71,18 @@ class HomeScreen extends React.Component {
 						<Image style={{ width: 136, height: 136 }} source={{ uri: item.images.large_urls[0] }} />
 					</View>
 				</View>
-				
-				<View style={{}}>
-					
+
+				{/* <View style={{width:112}}>
+					<Text style={{textAlign:'center',fontSize:12}}>
+						{item.name}
+					</Text>
+				</View> */}
+
+				<View style={{ justifyContent: 'center', alignItems: 'center' }}>
+					<Text style={{ fontSize: 16, color: '#d71149', fontWeight: 'bold', marginTop: 8 }}>Rp. {item.deal.discount_price}</Text>
+				</View>
+				<View style={{ justifyContent: 'center', alignItems: 'center' }}>
+					<Text style={{ fontSize: 13, color: '#999', textDecorationLine: 'line-through' }}>Rp. {item.deal.original_price}</Text>
 				</View>
 
 			</View>
@@ -228,7 +238,7 @@ class HomeScreen extends React.Component {
 							</View>
 
 						</View>
-						<View style={{ backgroundColor: 'white', paddingTop: 16 }}>
+						<View style={{ backgroundColor: 'white', paddingTop: 16, paddingBottom: 16 }}>
 							<View style={{ flexDirection: 'row' }}>
 								<View style={{ flex: 1 }}>
 									<View style={{ justifyContent: 'center', alignItems: 'center' }}>
@@ -309,7 +319,7 @@ class HomeScreen extends React.Component {
 								</View>
 								:
 
-
+								/*********RENDER BRAND*************** */
 								<View style={{ flex: 1 }}>
 									<View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingTop: 32, backgroundColor: 'white' }}>
 										<View style={{ marginLeft: 8 }}>
@@ -326,14 +336,17 @@ class HomeScreen extends React.Component {
 									<View style={{ backgroundColor: 'white' }}>
 										<View>
 											<FlatList
+												keyExtractor={(item, index) => index.toString()}
 												data={this.props.brand.data.data}
-												renderItem={this.renderBanner}
+												renderItem={this.renderBrand}
 												horizontal={true}
+
 
 											/>
 
 										</View>
 									</View>
+									{/*****RENDER SECITION****/}
 									<View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingTop: 32, backgroundColor: 'white' }}>
 										<View style={{ marginLeft: 8, width: 181 }}>
 											<Text style={{ fontWeight: 'bold' }}>
@@ -343,7 +356,7 @@ class HomeScreen extends React.Component {
 										<View style={{ marginRight: 8 }}>
 											<Text style={{ color: '#d71149' }}>
 												Selengkapnya
-								</Text>
+											</Text>
 										</View>
 									</View>
 									<View style={{ backgroundColor: 'white' }}>
@@ -352,94 +365,72 @@ class HomeScreen extends React.Component {
 												data={this.props.section1.data.data.products}
 												renderItem={this.renderSection}
 												horizontal={true}
+												keyExtractor={(item, index) => index.toString()}
+												showsHorizontalScrollIndicator={false}
 
 											/>
 
 										</View>
 									</View>
+
 									<View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingTop: 32, backgroundColor: 'white' }}>
 										<View style={{ marginLeft: 8, width: 181 }}>
 											<Text style={{ fontWeight: 'bold' }}>
-												{this.props.section1.data.data.title}
+												{this.props.section2.data.data.title}
 											</Text>
 										</View>
 										<View style={{ marginRight: 8 }}>
 											<Text style={{ color: '#d71149' }}>
 												Selengkapnya
-								</Text>
-										</View>
-									</View>
-									<View style={{ backgroundColor: 'white' }}>
-										<View>
-											<FlatList
-												data={this.props.section1.data.data.products}
-												renderItem={this.renderSection}
-												horizontal={true}
-
-											/>
-
-										</View>
-									</View>
-									<View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingTop: 32, backgroundColor: 'white' }}>
-										<View style={{ marginLeft: 8, width: 181 }}>
-											<Text style={{ fontWeight: 'bold' }}>
-												{this.props.section1.data.data.title}
 											</Text>
 										</View>
-										<View style={{ marginRight: 8 }}>
-											<Text style={{ color: '#d71149' }}>
-												Selengkapnya
-								</Text>
-										</View>
 									</View>
 									<View style={{ backgroundColor: 'white' }}>
 										<View>
 											<FlatList
-												data={this.props.section1.data.data.products}
+												data={this.props.section2.data.data.products}
 												renderItem={this.renderSection}
 												horizontal={true}
+												keyExtractor={(item, index) => index.toString()}
+												showsHorizontalScrollIndicator={false}
 
 											/>
 
 										</View>
-									</View>33333333
+									</View>
+
+
+									{/****RENDER WHY US*****/}
 									<View style={{ backgroundColor: 'white' }}>
-										<View style={{ paddingTop: 16, flexDirection: 'row', justifyContent: 'space-between', marginBottom: 16 }}>
-											<View style={{ marginLeft: 8 }}>
-												<Text style={{ fontWeight: 'bold' }}>Popular Products</Text>
+										<View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 16 }}>
+											<Text style={{ fontWeight: 'bold' }}>
+												Kenapa Harus Bukalapak?
+											</Text>
+										</View>
+										<View style={{ marginTop: 16, flexDirection: 'row' }}>
+											<FlatList
+												data={kenapa_bukalapak}
+												renderItem={this.renderKenapaHarusBukalapak}
+												horizontal={true}
+												keyExtractor={(item, index) => item.key.toString()}
+												showsHorizontalScrollIndicator={false}
+											/>
+										</View>
+									</View>
+									<View>
+										<View>
+											<View style={{alignItems:'center'}}>
+												<Text style={{ fontSize: 12, marginTop: 32, marginBottom: 32 }}>
+													Originally Clone By : Titus Efferian with React-native
+												</Text>
 											</View>
-											<View style={{ marginRight: 8 }}>
-												<Text style={{ color: '#d71149' }}>
-													Selengkapnya
-								</Text>
-											</View>
 										</View>
-										<FlatList
-											data={this.props.product.data.products}
-											renderItem={this.renderProduct}
-											horizontal={false}
-
-											numColumns={2}
-
-										/>
 									</View>
 								</View>
 
+
 						}
-						<View>
-							<View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 16 }}>
-								<Text style={{ fontWeight: 'bold' }}>
-									Kenapa Harus Bukalapak?
-								</Text>
-							</View>
-							<View style={{ marginTop: 16, flexDirection: 'row' }}>
-								<FlatList
-									data={kenapa_bukalapak}
-									renderItem={this.renderKenapaHarusBukalapak}
-									horizontal={true}
-								/>
-							</View>
-						</View>
+
 					</ScrollView>
 				</View>
 
@@ -452,7 +443,8 @@ function mapStateToProps(state) {
 		product: state.viewProductReducer,
 		brand: state.viewBrandReducer,
 		banner: state.viewBannerReducer,
-		section1: state.section1Reducer
+		section1: state.section1Reducer,
+		section2: state.section2Reducer
 	}
 }
 function mapDispatchToProps(dispatch) {
@@ -460,7 +452,8 @@ function mapDispatchToProps(dispatch) {
 		requestDataProduct: () => dispatch(requestDataProduct()),
 		requestDataBrand: () => dispatch(requestDataBrand()),
 		requestDataBanner: () => dispatch(requestDataBanner()),
-		requestDataSection1: () => dispatch(requestDataSection1())
+		requestDataSection1: () => dispatch(requestDataSection1()),
+		requestDataSection2: () => dispatch(requestDataSection2())
 	}
 }
 export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen);
