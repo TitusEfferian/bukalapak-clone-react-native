@@ -1,5 +1,6 @@
 import React from 'react';
 import { } from "react-navigation";
+import { StatusBar } from "react-native";
 import { Button, Text, Icon, Footer, FooterTab, Container, Header, Left, Body, Title, Right, Content, Item, Label, Input, View } from "native-base";
 
 export default class Login extends React.Component {
@@ -25,6 +26,7 @@ export default class Login extends React.Component {
         const { navigate } = this.props.navigation;
         return (
             <Container>
+                <StatusBar hidden={true} barStyle={'light-content'}/>
                 <Header>
                     <Left>
                         <Button

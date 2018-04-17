@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import Carousel from 'react-native-banner-carousel';
 class HomeScreen extends React.Component {
 
+
 	constructor(props) {
 		super(props)
 		this.width = 0;
@@ -15,11 +16,15 @@ class HomeScreen extends React.Component {
 	}
 
 	componentWillMount() {
-		this.props.requestDataProduct()
-		this.props.requestDataBrand()
-		this.props.requestDataBanner()
-		this.props.requestDataSection1()
-		this.props.requestDataSection2()
+		if(this.props.product.data == null && this.props.banner.data==null && this.props.brand.data==null&&this.props.section1.data==null&&this.props.section2.data==null)
+		{
+			this.props.requestDataProduct()
+			this.props.requestDataBrand()
+			this.props.requestDataBanner()
+			this.props.requestDataSection1()
+			this.props.requestDataSection2()
+		}
+		
 	}
 
 	renderBrand = ({ item }) => {
@@ -110,6 +115,7 @@ class HomeScreen extends React.Component {
 
 	}
 	render() {
+		console.log('test');
 		let kenapa_bukalapak = [
 			{
 				image_url: "https://s0.bukalapak.com/images/mobile/illustrations/il-jaminan-100@2x.png",
@@ -155,11 +161,9 @@ class HomeScreen extends React.Component {
 			}
 		]
 		return (
-
+			
 			<Container>
-				{
-					StatusBar.setBackgroundColor('#D71149', true)
-				}
+				<StatusBar hidden={true} barStyle={'light-content'}/>
 				<Header style={{ backgroundColor: '#D71149' }}>
 
 					<Left style={{ flexDirection: 'row' }}>
@@ -314,7 +318,7 @@ class HomeScreen extends React.Component {
 
 						{
 
-							this.props.product.data == null || this.props.brand.data == null || this.props.section1.data == null
+							this.props.product.data == null || this.props.brand.data == null || this.props.section1.data == null || this.props.section2.data==null
 								?
 								<View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
 									<Spinner color='#d71149' />
@@ -440,6 +444,7 @@ class HomeScreen extends React.Component {
 		);
 	}
 }
+
 function mapStateToProps(state) {
 	return {
 		product: state.viewProductReducer,

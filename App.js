@@ -13,7 +13,6 @@ import {
   Button,
   TouchableOpacity,
   StatusBar,
-  UIManager
 } from 'react-native';
 import { createStore, applyMiddleware } from "redux";
 import createSagaMiddleware from 'redux-saga';
@@ -90,20 +89,15 @@ const RootStack = StackNavigator({
 
 class App extends React.Component {
 
-  constructor()
-  {
-    super()
-    if(Platform.OS==='android')
-    {
-      UIManager.setLayoutAnimationEnabledExperimental && UIManager.setLayoutAnimationEnabledExperimental(true);
-    }
-    
-  }
+
   render() {
     return (
+
       <Provider store={store} >
+     
+          
+          <HomeScreen />
         
-        <HomeScreen/>
       </Provider>
     );
   }
