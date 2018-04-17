@@ -59,33 +59,35 @@ class HomeScreen extends React.Component {
 	renderSection({ item }) {
 		let text = item.description;
 		return (
-			<View style={{ paddingTop: 16 }}>
+			<TouchableOpacity onPress={()=>Linking.openURL(item.url)}>
+				<View style={{ paddingTop: 16 }}>
 
-				<View style={{ marginLeft: 8 }}>
-					<View style={{ zIndex: 2, position: 'absolute', flexDirection: 'row', width: 31, height: 31, borderRadius: 60, backgroundColor: '#ff566a', marginTop: 8, marginLeft: 96 }}>
-						<Text style={{ color: 'white', fontSize: 12, fontWeight: 'bold', marginLeft: 5, marginTop: 6 }}>
-							{item.deal.percentage}%
+					<View style={{ marginLeft: 8 }}>
+						<View style={{ zIndex: 2, position: 'absolute', flexDirection: 'row', width: 31, height: 31, borderRadius: 60, backgroundColor: '#ff566a', marginTop: 8, marginLeft: 96 }}>
+							<Text style={{ color: 'white', fontSize: 12, fontWeight: 'bold', marginLeft: 5, marginTop: 6 }}>
+								{item.deal.percentage}%
 						</Text>
+						</View>
+						<View style={{ zIndex: 1, position: 'relative' }}>
+							<Image style={{ width: 136, height: 136 }} source={{ uri: item.images.large_urls[0] }} />
+						</View>
 					</View>
-					<View style={{ zIndex: 1, position: 'relative' }}>
-						<Image style={{ width: 136, height: 136 }} source={{ uri: item.images.large_urls[0] }} />
-					</View>
-				</View>
 
-				{/* <View style={{width:112}}>
+					{/* <View style={{width:112}}>
 					<Text style={{textAlign:'center',fontSize:12}}>
 						{item.name}
 					</Text>
 				</View> */}
 
-				<View style={{ justifyContent: 'center', alignItems: 'center' }}>
-					<Text style={{ fontSize: 16, color: '#d71149', fontWeight: 'bold', marginTop: 8 }}>Rp. {item.deal.discount_price}</Text>
-				</View>
-				<View style={{ justifyContent: 'center', alignItems: 'center' }}>
-					<Text style={{ fontSize: 13, color: '#999', textDecorationLine: 'line-through' }}>Rp. {item.deal.original_price}</Text>
-				</View>
+					<View style={{ justifyContent: 'center', alignItems: 'center' }}>
+						<Text style={{ fontSize: 16, color: '#d71149', fontWeight: 'bold', marginTop: 8 }}>Rp. {item.deal.discount_price}</Text>
+					</View>
+					<View style={{ justifyContent: 'center', alignItems: 'center' }}>
+						<Text style={{ fontSize: 13, color: '#999', textDecorationLine: 'line-through' }}>Rp. {item.deal.original_price}</Text>
+					</View>
 
-			</View>
+				</View>
+			</TouchableOpacity>
 		);
 	}
 	renderKenapaHarusBukalapak({ item }) {
@@ -419,7 +421,7 @@ class HomeScreen extends React.Component {
 									</View>
 									<View>
 										<View>
-											<View style={{alignItems:'center'}}>
+											<View style={{ alignItems: 'center' }}>
 												<Text style={{ fontSize: 12, marginTop: 32, marginBottom: 32 }}>
 													Originally Clone By : Titus Efferian with React-native
 												</Text>
