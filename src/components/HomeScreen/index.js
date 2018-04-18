@@ -8,7 +8,6 @@ import Pulsa from "../Pulsa/index.js";
 const HomeScreenRouter = DrawerNavigator(
     {
         Home: { screen: HomeScreen },
-        Login:{screen:Login},
         Pulsa:{screen:Pulsa},
         Login:{screen:Login}
     },
