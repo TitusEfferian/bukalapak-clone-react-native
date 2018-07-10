@@ -137,8 +137,9 @@ class ContentClass extends React.Component {
         key: 5
       }
     ]
+    console.log(this.props)
     return (
-
+    
       <Container>
         <StatusBar hidden={true} barStyle={'light-content'} />
         <Header style={{ backgroundColor: '#D71149' }}>

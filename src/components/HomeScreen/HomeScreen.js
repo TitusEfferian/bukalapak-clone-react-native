@@ -22,13 +22,20 @@ class HomeScreen extends React.Component {
 		}
 
 	}
+	componentWillUnmount()
+	{
+		this.props.product.data=undefined;
+		this.props.banner.data=undefined;
+		this.props.brand.data=undefined;
+		this.props.section1.data=undefined;
+		this.props.section2.data=undefined;
+	}
 
 
 	render() {
-		
+		console.log(this.props)
 		return (
 			<ContentClass lemparProps={this.props} />
-
 		);
 	}
 }
